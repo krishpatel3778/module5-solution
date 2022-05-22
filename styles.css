@@ -236,7 +236,6 @@ body{
 	font-size: .5em;
 }.one-item{
 	margin-bottom: 30px;
-	height: 280px;
 }
 
 @media (min-width: 1200px){
