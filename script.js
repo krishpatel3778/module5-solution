@@ -6,10 +6,12 @@ function $(value){return document.querySelector(value);}
 document.addEventListener("DOMContentLoaded",
     function(event){
         function $(value){return document.querySelector(value);}
+        $("#main-content").innerHTML='<div class="text-center"><img src=images/ajax-loader.gif></div>';
         ajaxUtils.sendGetRequest("snippets/intial-load.html",function(request){  
             $("#main-content").innerHTML=request.responseText;
             menuFunction();
         },false);
+        
         $(".navbar-toggler").addEventListener("click",function(event){
              $(".navbar-toggler").focus();
         });
@@ -20,8 +22,21 @@ document.addEventListener("DOMContentLoaded",
             }
         });
         function menuFunction(){
+            $("#specials").addEventListener("click",function(event){
+                $("#menu").click();
+                var check=setInterval(function () {
+                    var random=Math.floor(Math.random()*20)+1;
+                    if($("#menu-tiles>div:nth-child("+random+")")!=null){
+                        $("#menu-tiles>div:nth-child("+random+")").click();
+                        clearInterval(check);
+                    }
+                }, .5);
+                        
+            });
             $("#home-tiles>div:nth-child(1)>a").addEventListener("click",getData);
+            $("#menu").addEventListener("click",getData);
             function getData(){
+                $("#menu").className="nav-link active";
                 var menuTitle;
                 var onlineData;
                 var menuContent;
@@ -52,12 +67,11 @@ document.addEventListener("DOMContentLoaded",
             }
     }
     function singleCategory(){
-        console.log("here");
+        
         var allButtons=document.querySelectorAll("#category");
         for(var x=0;x<allButtons.length;x++){
             allButtons[x].addEventListener("click",function(event){
                 var url="https://davids-restaurant.herokuapp.com/menu_items.json?category="+this.getAttribute("alt");
-                console.log(url);
                 var category=this.getAttribute("type");
                 getIdata(url,category);
             });
@@ -78,7 +92,6 @@ document.addEventListener("DOMContentLoaded",
                 },true);
         }
         function buildSingle(singleTitle,singleContent,onlineIdata,category){
-                console.log(onlineIdata);
                 var html=singleTitle.replace("name",category);
                 html=html.replace('special-instructions',onlineIdata.category.special_instructions);
                 var html2="";

@@ -103,6 +103,8 @@ body{
 	margin-right: 10px;
 	text-align: center;
 	width: 100%;
+}.nav-link.active{
+	background-color: lightblue;
 }
 .nav-item h1{
 	color: #61122f;
